@@ -8,9 +8,6 @@ brotlipy==0.7.0
 certifi==2021.10.8
 cffi==1.16.0
 comtypes==1.1.10
-conda==4.12.0
-conda-build==3.21.8
-conda-verify==3.4.2
 constantly==15.1.0
 crypto==1.4.1
 cryptography==42.0.5
@@ -38,7 +35,6 @@ munkres==1.1.4
 mypy-extensions==0.4.3
 mysql-connector-python==8.0.33
 Naked==0.1.32
-navigator-updater==0.2.1
 opencv-contrib-python==4.9.0.80
 opencv-python==4.9.0.80
 pathspec==0.7.0
