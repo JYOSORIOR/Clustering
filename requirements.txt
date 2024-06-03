@@ -14,10 +14,10 @@ cryptography==42.0.5
 cssselect==1.1.0
 datashape==0.5.2
 distlib==0.3.7
-Django==4.2.7
-django-crispy-forms==2.1
-django-extensions==3.2.3
-django-pyodbc-azure==2.1.0.0
+django-crispy-forms
+django-extensions
+django-pyodbc-azure
+Django>=4.2
 et-xmlfile==1.1.0
 filelock==3.12.2
 fonttools==4.25.0
