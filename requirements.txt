@@ -12,9 +12,8 @@ constantly==15.1.0
 crypto==1.4.1
 cryptography==42.0.5
 cssselect==1.1.0
-cytoolz==0.11.0
 daal4py==2024.4.0
-datashape==0.5.4
+datashape==0.5.2
 distlib==0.3.7
 Django==4.2.7
 django-crispy-forms==2.1
