@@ -8,6 +8,7 @@ from sklearn.preprocessing import StandardScaler
 import io
 import base64
 import urllib
+from django.views.decorators.csrf import csrf_exempt
 import copy
 
 def plot_to_base64(plt):
