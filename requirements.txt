@@ -62,7 +62,6 @@ shellescape==3.8.1
 sklearn==0.0
 sqlparse==0.4.4
 numpy==1.23.5
-tables==3.7.0
 tabulate==0.8.9
 typer==0.9.0
 typing_extensions==4.8.0
