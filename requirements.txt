@@ -62,8 +62,6 @@ ruamel.yaml.clib==0.2.8
 shellescape==3.8.1
 sklearn==0.0
 sqlparse==0.4.4
-statsmodels==0.12.2
-sympy==1.10.1
 tables==3.6.1
 tabulate==0.8.9
 TBB==0.2
