@@ -66,6 +66,7 @@ def tablas_cluster(df, clusters):
         cluster_tables[cluster_id] = cluster_df
     return cluster_tables
 
+@csrf_exempt
 def upload_csv(request):
     error_carga = False
     exito_carga = False
