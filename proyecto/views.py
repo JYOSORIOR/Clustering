@@ -6,6 +6,7 @@ import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
+from django.views.decorators.csrf import csrf_exempt
 import io
 import base64
 import urllib
@@ -71,6 +72,7 @@ def calcular_silhouette_score(X, labels):
     score = silhouette_score(X, labels)
     return score
 
+@csrf_exempt
 def upload_csv(request):
     error_carga = False
     exito_carga = False
