@@ -70,7 +70,8 @@ def tablas_cluster(df, clusters):
 def calcular_silhouette_score(X, clusters):
     score = silhouette_score(X, clusters)
     return score
-
+    
+@csrf_exempt
 def upload_csv(request):
     error_carga = False
     exito_carga = False
