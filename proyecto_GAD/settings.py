@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-3e+)+%*q36k$%%wuhz539kgssk)uitu(z9u*r*!%15g5i51!@9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['clustering-wx09.onrender.com']
+ALLOWED_HOSTS = ['clustering-inpf.onrender.com']
 
 
 # Application definition
