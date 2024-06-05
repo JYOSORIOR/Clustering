@@ -9,6 +9,7 @@ from sklearn.metrics import silhouette_score
 import io
 import base64
 import urllib
+from django.views.decorators.csrf import csrf_exempt
 
 def plot_to_base64(plt):
     buf = io.BytesIO()
@@ -70,7 +71,7 @@ def tablas_cluster(df, clusters):
 def calcular_silhouette_score(X, clusters):
     score = silhouette_score(X, clusters)
     return score
-    
+
 @csrf_exempt
 def upload_csv(request):
     error_carga = False
