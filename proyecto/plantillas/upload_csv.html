@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Clustering</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 <body>
     <div class="container-fluid">
@@ -45,6 +44,9 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" id="tab-cluster-link" data-toggle="pill" href="#tab-cluster" role="tab">Clustering</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab-score-link" data-toggle="pill" href="#tab-score" role="tab">Score</a>
                                             </li>
                                             {% if tablas_clusters %}
                                                 {% for cluster_id, cluster_table in tablas_clusters.items %}
@@ -127,6 +129,11 @@
                     <div class="tab-pane fade" id="tab-cluster" role="tabpanel" aria-labelledby="tab-cluster-link">
                         <h3>Clustering</h3>
                         <img src="{{ grafico_cluster }}" class="img-fluid" alt="Gráfico de Clúster">
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-score" role="tabpanel" aria-labelledby="tab-score-link">
+                        <h3>Silhouette Score</h3>
+                        <p>{{ score_silhouette }}</p>
                     </div>
 
                     {% if tablas_clusters %}

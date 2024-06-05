@@ -5,11 +5,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
 import io
 import base64
 import urllib
-from django.views.decorators.csrf import csrf_exempt
-import copy
 
 def plot_to_base64(plt):
     buf = io.BytesIO()
@@ -20,12 +19,13 @@ def plot_to_base64(plt):
     buf.close()
     return uri
 
-def limpiar_y_preprocesar(df):
+def limpiar_y_preprocesar(df, features):
+    df = df[features]
     for column in df.columns:
         df[column] = pd.to_numeric(df[column], errors='coerce')
     df.fillna(df.mean(), inplace=True)
     scaler = StandardScaler()
-    df[df.columns] = scaler.fit_transform(df[df.columns])
+    df[features] = scaler.fit_transform(df[features])
     return df
 
 def obtener_grafico_dispersion(df):
@@ -47,7 +47,7 @@ def obtener_grafico_codo(X):
     return plot_to_base64(plt)
 
 def clustering(X):
-    kmeans = KMeans(n_clusters=3,  random_state=0, max_iter=300, n_init=10)
+    kmeans = KMeans(n_clusters=3, random_state=0, max_iter=300, n_init=10)
     clusters = kmeans.fit_predict(X)
     return clusters
 
@@ -67,7 +67,10 @@ def tablas_cluster(df, clusters):
         cluster_tables[cluster_id] = cluster_df
     return cluster_tables
 
-@csrf_exempt
+def calcular_silhouette_score(X, labels):
+    score = silhouette_score(X, labels)
+    return score
+
 def upload_csv(request):
     error_carga = False
     exito_carga = False
@@ -78,6 +81,7 @@ def upload_csv(request):
     grafico_codo = None
     grafico_cluster = None
     tablas_clusters = {}
+    score_silhouette = None
 
     if request.method == 'POST' and request.FILES.get('csv_file'):
         archivo_csv = request.FILES['csv_file']
@@ -87,7 +91,7 @@ def upload_csv(request):
             exito_carga = True
 
             df = pd.DataFrame(datos_csv[1:], columns=datos_csv[0])
-            original_df = df.copy()  #
+            original_df = df.copy()  
     
             caracteristicas = ['Mortalidad_infantil', 'Ingreso_neto_per_cápita', 'Esperanza_de_vida_al_nacer', 'Gasto_en_salud', 'PIB_per_cápita']
             
@@ -110,19 +114,19 @@ def upload_csv(request):
 
                 clusters = clustering(X)
                 df['Cluster'] = clusters
-                
-              
                 original_df['Cluster'] = clusters
 
-               # Gráfico del cluster
+                # Gráfico del cluster
                 grafico_cluster = obtener_grafico_cluster(df, clusters)
 
                 # Gráfico de las tablas con el cluster
                 tablas_clusters = tablas_cluster(original_df, clusters) 
+
+                # Calcular Silhouette Score
+                score_silhouette = calcular_silhouette_score(X, clusters)
         else:
             error_carga = True
         
-
     contexto = {
         'error_carga': error_carga,
         'exito_carga': exito_carga,
@@ -131,6 +135,7 @@ def upload_csv(request):
         'grafico_codo': grafico_codo,
         'grafico_cluster': grafico_cluster,
         'tablas_clusters': tablas_clusters,
+        'score_silhouette': score_silhouette
     }
 
     return render(request, 'upload_csv.html', contexto)
