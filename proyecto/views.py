@@ -20,13 +20,13 @@ def plot_to_base64(plt):
     buf.close()
     return uri
 
-def limpiar_y_preprocesar(df, features):
-    df = df[features]
+def limpiar_y_preprocesar(df, caracteristicas):
+    df = df[caracteristicas]
     for column in df.columns:
         df[column] = pd.to_numeric(df[column], errors='coerce')
     df.fillna(df.mean(), inplace=True)
     scaler = StandardScaler()
-    df[features] = scaler.fit_transform(df[features])
+    df[caracteristicas] = scaler.fit_transform(df[caracteristicas])
     return df
 
 def obtener_grafico_dispersion(df):
