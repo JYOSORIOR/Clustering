@@ -6,7 +6,6 @@ import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
-from django.views.decorators.csrf import csrf_exempt
 import io
 import base64
 import urllib
@@ -20,13 +19,13 @@ def plot_to_base64(plt):
     buf.close()
     return uri
 
-def limpiar_y_preprocesar(df, caracteristicas):
-    df = df[caracteristicas]
+def limpiar_y_preprocesar(df, features):
+    df = df[features]
     for column in df.columns:
         df[column] = pd.to_numeric(df[column], errors='coerce')
     df.fillna(df.mean(), inplace=True)
     scaler = StandardScaler()
-    df[caracteristicas] = scaler.fit_transform(df[caracteristicas])
+    df[features] = scaler.fit_transform(df[features])
     return df
 
 def obtener_grafico_dispersion(df):
@@ -68,11 +67,10 @@ def tablas_cluster(df, clusters):
         cluster_tables[cluster_id] = cluster_df
     return cluster_tables
 
-def calcular_silhouette_score(X, labels):
-    score = silhouette_score(X, labels)
+def calcular_silhouette_score(X, clusters):
+    score = silhouette_score(X, clusters)
     return score
 
-@csrf_exempt
 def upload_csv(request):
     error_carga = False
     exito_carga = False
@@ -103,7 +101,7 @@ def upload_csv(request):
                 exito_carga = False
             else:
                 # Limpiar y preprocesar los datos
-                df = limpiar_y_preprocesar(df)
+                df = limpiar_y_preprocesar(df, caracteristicas)
 
                 # Proceso de clustering
                 X = df[caracteristicas]
@@ -116,6 +114,7 @@ def upload_csv(request):
 
                 clusters = clustering(X)
                 df['Cluster'] = clusters
+                
                 original_df['Cluster'] = clusters
 
                 # Gráfico del cluster
@@ -124,7 +123,6 @@ def upload_csv(request):
                 # Gráfico de las tablas con el cluster
                 tablas_clusters = tablas_cluster(original_df, clusters) 
 
-                # Calcular Silhouette Score
                 score_silhouette = calcular_silhouette_score(X, clusters)
         else:
             error_carga = True
