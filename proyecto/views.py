@@ -41,7 +41,7 @@ def obtener_grafico_codo(X):
         modelo.fit(X)
         scc.append(modelo.inertia_)
     plt.figure()
-    plt.plot(range(1, 11), scc)
+    plt.plot(range(1, 11), scc, marker='o')
     plt.xlabel('Clusters')
     plt.ylabel('Inercia')
     plt.title('Método del Codo')
@@ -124,7 +124,8 @@ def upload_csv(request):
 
                 # Gráfico de las tablas con el cluster
                 tablas_clusters = tablas_cluster(original_df, clusters) 
-
+                
+                 # Metrica de Evaluación
                 score_silhouette = calcular_silhouette_score(X, clusters)
         else:
             error_carga = True
